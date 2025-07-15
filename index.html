@@ -8,29 +8,15 @@
     body {
       margin: 0;
       height: 100vh;
-      /* --- CHANGE 1: Smokey Background --- */
-      background-color: #ffffff; /* Base color is now white */
-      color: #121212; /* Default text color is now dark */
+      /* --- CHANGE 1: Black background --- */
+      background-color: #000000;
+      color: #ffffff; /* Text is white to be visible */
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       overflow: hidden;
       position: relative;
-      /* Layered gradients to create a smoke/cloud effect */
-      background-image: 
-        radial-gradient(circle at 25% 25%, rgba(200, 200, 200, 0.5) 0%, rgba(200, 200, 200, 0) 50%),
-        radial-gradient(circle at 75% 75%, rgba(220, 220, 220, 0.4) 0%, rgba(220, 220, 220, 0) 40%),
-        radial-gradient(circle at 80% 20%, rgba(210, 210, 210, 0.5) 0%, rgba(210, 210, 210, 0) 35%);
-      background-size: 200% 200%;
-      animation: smokeWaft 45s linear infinite;
-    }
-
-    /* --- CHANGE 1: Keyframes for smoke animation --- */
-    @keyframes smokeWaft {
-      0% { background-position: 0% 0%; }
-      50% { background-position: 100% 100%; }
-      100% { background-position: 0% 0%; }
     }
 
     h1 {
@@ -39,7 +25,7 @@
       letter-spacing: 2px;
       cursor: pointer;
       transition: all 0.3s ease;
-      z-index: 2;
+      z-index: 10; /* Make sure text is on top of everything */
     }
 
     h1:hover {
@@ -47,70 +33,121 @@
       text-shadow: 0 0 10px #ff0033, 0 0 20px #ff0033, 0 0 30px #990000;
       transform: scale(1.1);
     }
-
-    .demon-face {
+    
+    /* --- CHANGE 2: The demon is now a container, not a solid object --- */
+    .demon-container {
       display: none;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      height: 300px;
-      width: 300px;
-      background: radial-gradient(circle at center, #000000 60%, #ff0000 100%);
-      border-radius: 50%;
-      box-shadow: 0 0 40px 10px red;
+      height: 400px; /* Larger container for features */
+      width: 400px;
       z-index: 1;
       opacity: 0;
-      animation: fadeIn 1s forwards;
+      animation: fadeIn 2s forwards;
     }
 
-    /* --- CHANGE 2: Styling for the thorns --- */
-    .thorn {
+    /* --- CHANGE 1: Dedicated white smoke element --- */
+    .smoke {
         position: absolute;
-        width: 0;
-        height: 0;
-        /* Create triangle shape */
-        border-left: 15px solid transparent;
-        border-right: 15px solid transparent;
-        border-bottom: 45px solid #000; /* Black thorns */
+        top: 50%;
+        left: 50%;
+        width: 500px;
+        height: 500px;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
+        animation: smokeWaft 20s linear infinite;
+        z-index: -1; /* Behind the eyes/mouth */
     }
 
-    /* Positioning each thorn around the demon face */
-    .thorn:nth-child(1) { top: -30px; left: calc(50% - 15px); }
-    .thorn:nth-child(2) { top: 25px; left: -10px; transform: rotate(-55deg); }
-    .thorn:nth-child(3) { top: 25px; right: -10px; transform: rotate(55deg); }
-    .thorn:nth-child(4) { bottom: 25px; left: -10px; transform: rotate(-125deg); }
-    .thorn:nth-child(5) { bottom: 25px; right: -10px; transform: rotate(125deg); }
-    .thorn:nth-child(6) { bottom: -30px; left: calc(50% - 15px); transform: rotate(180deg); }
-    .thorn:nth-child(7) { top: calc(50% - 22px); left: -25px; transform: rotate(-90deg); }
-    .thorn:nth-child(8) { top: calc(50% - 22px); right: -25px; transform: rotate(90deg); }
+    /* --- CHANGE 5: Two horns, positioned and styled --- */
+    .horn {
+        position: absolute;
+        top: 50px;
+        width: 30px;
+        height: 80px;
+        background: #1a1a1a;
+        box-shadow: 0 0 15px 2px #ff0000;
+        clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    }
 
+    .horn.left {
+        left: 90px;
+        transform: rotate(-25deg);
+    }
 
-    /* --- CHANGE 3: Demonic Eye Styling --- */
+    .horn.right {
+        right: 90px;
+        transform: rotate(25deg);
+    }
+    
+    /* --- CHANGE 3: Fiery, dangerous eyes using clip-path and shadows --- */
     .eye {
       position: absolute;
-      width: 25px;  /* Narrower */
-      height: 60px; /* Taller */
-      /* A gradient from yellow (pupil) to red (iris) */
-      background: radial-gradient(circle at center, #ffee00 10%, #ff0000 80%);
-      /* Shaping the div into a vertical, pointed oval */
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      box-shadow: 0 0 15px 5px #ff0000, inset 0 0 10px #660000;
-      top: 95px; /* Adjusted position */
+      width: 80px;
+      height: 40px;
+      background: #ffc300;
+      top: 150px;
+      /* Stacked box-shadows for an intense, layered glow */
+      box-shadow: 
+        0 0 5px #fff,
+        0 0 15px #ffc300,
+        0 0 25px #ff5733,
+        0 0 40px #c70039;
+      /* A sharp, angry eye shape */
+      clip-path: polygon(0 50%, 20% 0, 80% 0, 100% 50%, 80% 100%, 20% 100%);
+      animation: flicker 1.5s infinite alternate;
     }
 
     .eye.left {
-      left: 80px;
+      left: 90px;
     }
 
     .eye.right {
-      right: 80px;
+      right: 90px;
+      animation-delay: -0.5s; /* Make eyes flicker out of sync */
+    }
+
+    /* --- CHANGE 4: Jagged, glowing mouth --- */
+    .mouth {
+        position: absolute;
+        width: 220px;
+        height: 100px;
+        bottom: 70px;
+        left: 90px;
+        background: #ff5733;
+        box-shadow: 
+            0 0 10px #ffc300,
+            0 0 20px #ff5733,
+            0 0 35px #c70039;
+        /* A complex polygon to create a jagged, toothy grin */
+        clip-path: polygon(0 60%, 5% 40%, 10% 60%, 15% 35%, 20% 60%, 25% 45%, 30% 65%, 35% 40%, 40% 60%, 45% 30%, 50% 60%, 55% 35%, 60% 55%, 65% 30%, 70% 58%, 75% 40%, 80% 60%, 85% 35%, 90% 60%, 95% 40%, 100% 60%, 100% 100%, 0 100%);
+        animation: flicker 2s infinite alternate;
     }
 
     @keyframes fadeIn {
       to {
-        opacity: 0.9; /* Slightly transparent to blend with smoke */
+        opacity: 1;
       }
+    }
+
+    @keyframes smokeWaft {
+        0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+        50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.2); }
+        100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
+    }
+    
+    /* Animation to make the fire flicker and pulse */
+    @keyframes flicker {
+        0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        50% {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
     }
 
     .moved-bottom {
@@ -125,20 +162,15 @@
   </style>
 </head>
 <body>
-  <h1 id="title">Server boy :)</h1>
-  <div class="demon-face" id="demon">
-    <!-- --- CHANGE 2: Added thorn elements --- -->
-    <div class="thorn"></div>
-    <div class="thorn"></div>
-    <div class="thorn"></div>
-    <div class="thorn"></div>
-    <div class="thorn"></div>
-    <div class="thorn"></div>
-    <div class="thorn"></div>
-    <div class="thorn"></div>
+  <h1 id="title">Server boy</h1>
 
+  <div class="demon-container" id="demon">
+    <div class="smoke"></div>
+    <div class="horn left"></div>
+    <div class="horn right"></div>
     <div class="eye left"></div>
     <div class="eye right"></div>
+    <div class="mouth"></div>
   </div>
 
   <script>
