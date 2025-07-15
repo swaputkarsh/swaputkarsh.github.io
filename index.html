@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DevOps guy</title>
+  <title>Server Demon</title>
   <style>
     body {
       margin: 0;
@@ -16,6 +16,22 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       overflow: hidden;
       position: relative;
+    }
+
+    .smoke {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.05), rgba(255,255,255,0));
+      animation: smokeMove 20s infinite linear;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes smokeMove {
+      0% { transform: translate(-25%, -25%) scale(1); }
+      50% { transform: translate(-20%, -20%) scale(1.1); }
+      100% { transform: translate(-25%, -25%) scale(1); }
     }
 
     h1 {
@@ -82,23 +98,53 @@
       color: #ff0000;
       text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
     }
+
+    /* Red thorn vines */
+    .thorns {
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(0deg);
+      border: 2px dashed red;
+      border-radius: 50%;
+      z-index: 1;
+      animation: spinThorns 10s linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes spinThorns {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .show-thorns {
+      opacity: 1;
+      transition: opacity 1s ease;
+    }
   </style>
 </head>
 <body>
-  <h1 id="title">Server boy :)</h1>
+  <div class="smoke"></div>
+  <h1 id="title">Server boy</h1>
+
   <div class="demon-face" id="demon">
     <div class="eye left"></div>
     <div class="eye right"></div>
   </div>
+  <div class="thorns" id="thorns"></div>
 
   <script>
     const title = document.getElementById('title');
     const demon = document.getElementById('demon');
+    const thorns = document.getElementById('thorns');
 
     title.addEventListener('click', () => {
       title.textContent = 'Server Demon';
       title.classList.add('moved-bottom');
       demon.style.display = 'block';
+      thorns.classList.add('show-thorns');
     });
   </script>
 </body>
