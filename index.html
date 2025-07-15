@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DevOps guy</title>
   <style>
     body {
@@ -14,15 +14,92 @@
       justify-content: center;
       align-items: center;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      position: relative;
     }
+
     h1 {
       font-size: 3rem;
       font-weight: bold;
       letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 2;
+    }
+
+    h1:hover {
+      color: #ff0033;
+      text-shadow: 0 0 10px #ff0033, 0 0 20px #ff0033, 0 0 30px #990000;
+      transform: scale(1.1);
+    }
+
+    .demon-face {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 300px;
+      width: 300px;
+      background: radial-gradient(circle at center, #000000 60%, #ff0000 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 40px 10px red;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+
+    .eye {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-color: red;
+      border-radius: 50%;
+      box-shadow: 0 0 10px red;
+      top: 90px;
+    }
+
+    .eye.left {
+      left: 80px;
+    }
+
+    .eye.right {
+      right: 80px;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .moved-bottom {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3rem;
+      color: #ff0000;
+      text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
     }
   </style>
 </head>
 <body>
-  <h1>Server boy</h1>
+  <h1 id="title">Server boy :)</h1>
+  <div class="demon-face" id="demon">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+  </div>
+
+  <script>
+    const title = document.getElementById('title');
+    const demon = document.getElementById('demon');
+
+    title.addEventListener('click', () => {
+      title.textContent = 'Server Demon';
+      title.classList.add('moved-bottom');
+      demon.style.display = 'block';
+    });
+  </script>
 </body>
 </html>
